@@ -4,7 +4,6 @@ data class GitUser(
             val avatarUrl: String,
             val bio: String,
             val email: Any,
-            val followersUrl: String,
+            val followers: Int,
             val following: Int,
-
             )

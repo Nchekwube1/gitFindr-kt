@@ -61,7 +61,7 @@ fun GitUserDto.toGitUser(): GitUser {
                         avatarUrl = avatarUrl,
                         bio = bio,
                         email = email,
-                         followersUrl = followersUrl,
+                         followers = followers,
                          following = following
             )
 }
