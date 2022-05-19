@@ -15,13 +15,13 @@ class GetUserUseCase @Inject constructor(
 ) {
             operator fun invoke(username: String): Flow<Resource<GitUser>> = flow {
                         try {
-                                    emit(Resource.Loading())
+                                    emit(Resource.Loading<GitUser>())
                                     val coins = repository.getUser(username).toGitUser()
-                                    emit(Resource.Success(coins))
+                                    emit(Resource.Success<GitUser>(coins))
                         }
                         catch (e: HttpException) {
                                     emit(
-                                                Resource.Error(
+                                                Resource.Error<GitUser>(
                                                             e.localizedMessage
                                                                         ?: "An unexpected error occurred"
                                                 )
@@ -29,7 +29,7 @@ class GetUserUseCase @Inject constructor(
                         }
                         catch (e: IOException) {
                                     emit(
-                                                Resource.Error(
+                                                Resource.Error<GitUser>(
                                                              "Couldn't reach server. Check your internet connection"
                                                 )
                                     )

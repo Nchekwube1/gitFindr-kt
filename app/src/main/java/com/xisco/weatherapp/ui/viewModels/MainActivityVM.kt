@@ -18,7 +18,7 @@ class MainActivityVM @Inject constructor(
                         get() = _state
 
 
-            private fun getUser(username: String) {
+             fun getUser(username: String) {
                         getUserUseCase(username).onEach { result ->
                                     when (result) {
                                                 is Resource.Success -> {
