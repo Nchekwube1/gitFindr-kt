@@ -1,8 +1,9 @@
 package com.xisco.weatherapp.data.remote.dto
 
 import com.google.gson.annotations.SerializedName
+import com.xisco.weatherapp.domain.model.GitUser
 
-data class gitUserDto(
+data class GitUserDto(
             @SerializedName("avatar_url")
             val avatarUrl: String,
             val bio: String,
@@ -54,3 +55,13 @@ data class gitUserDto(
             val updatedAt: String,
             val url: String
 )
+
+fun GitUserDto.toGitUser(): GitUser {
+            return GitUser(
+                        avatarUrl = avatarUrl,
+                        bio = bio,
+                        email = email,
+                         followersUrl = followersUrl,
+                         following = following
+            )
+}
