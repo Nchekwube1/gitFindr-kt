@@ -1,8 +1,7 @@
 package com.xisco.weatherapp.di
 
 import com.xisco.weatherapp.data.remote.GithubApi
-import com.xisco.weatherapp.data.repository.UserRepositoryImpl
-import com.xisco.weatherapp.domain.repository.UserRepository
+import com.xisco.weatherapp.data.repository.UserRepository
 import com.xisco.weatherapp.utils.Constants
 import dagger.Module
 import dagger.Provides
@@ -29,7 +28,7 @@ object AppModule {
             @Provides
             @Singleton
             fun provideGithubRepository(api: GithubApi): UserRepository{
-                        return  UserRepositoryImpl(api)
+                        return  UserRepository(api)
             }
 
 }

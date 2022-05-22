@@ -1,27 +1,21 @@
 package com.xisco.weatherapp.ui.viewModels
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.xisco.weatherapp.data.remote.dto.GitUserDto
 import com.xisco.weatherapp.data.remote.dto.toGitUser
-import com.xisco.weatherapp.data.repository.UserRepositoryImpl
+import com.xisco.weatherapp.data.repository.UserRepository
 import com.xisco.weatherapp.domain.model.GitUser
-import com.xisco.weatherapp.domain.use_cases.get_user.GetUserUseCase
-import com.xisco.weatherapp.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
 class MainActivityVM @Inject constructor(
 //            private val getUserUseCase: GetUserUseCase
-            private val repositoryImpl: UserRepositoryImpl
+            private val repositoryImpl: UserRepository
 ) : ViewModel() {
 
 
