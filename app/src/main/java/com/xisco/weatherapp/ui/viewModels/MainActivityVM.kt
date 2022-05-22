@@ -1,31 +1,30 @@
 package com.xisco.weatherapp.ui.viewModels
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.xisco.weatherapp.data.remote.dto.toGitUser
 import com.xisco.weatherapp.data.repository.UserRepository
-import com.xisco.weatherapp.domain.model.GitUser
+import com.xisco.weatherapp.utils.DispatcherProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 @HiltViewModel
 class MainActivityVM @Inject constructor(
-            private val repository: UserRepository
+            private val repository: UserRepository,
+            private val dispatchers: DispatcherProvider
 ) : ViewModel() {
 
-
-            private val _state = MutableLiveData<GitUser>()
-
-            val state: LiveData<GitUser>
-                        get() = _state
-
-
-            init {
+            sealed class GithubEvents {
+                        class Success(val resultText: String) : GithubEvents()
+                        class Failure(val resultText: String) : GithubEvents()
+                        object Loading : GithubEvents()
+                        object Empty : GithubEvents()
             }
+
+            private val _userState = MutableStateFlow<GithubEvents>(GithubEvents.Empty)
+
+            val userState: StateFlow<GithubEvents>
+                        get() = _userState
 
 
 }
