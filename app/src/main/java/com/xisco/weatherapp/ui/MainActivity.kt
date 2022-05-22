@@ -24,14 +24,6 @@ class MainActivity : AppCompatActivity() {
                                     DataBindingUtil.setContentView(this, R.layout.activity_main)
 
                         mainActivityBinding.pbLoading.visibility = View.VISIBLE
-//                        viewModel.state.observe(this) { userDetails ->
-//                                    mainActivityBinding.clUsetDetail.visibility = View.VISIBLE
-//                                    mainActivityBinding.pbLoading.visibility = View.GONE
-////                                    mainActivityBinding.tvUserBio.text = userDetails.bio
-//                        }
-                        Log.d("MainActivity", "onCreate: ${viewModel.state}")
-
-//                        mainActivityBinding.btnSearch.setOnClickListener { searchGithubUser() }
             }
 
 
@@ -49,9 +41,7 @@ class MainActivity : AppCompatActivity() {
 
                         if (currentUser.isNotEmpty()) {
                                     mainActivityBinding.pbLoading.visibility = View.VISIBLE
-                                    viewModel.state.observe(this) { userDetails ->
-                                                mainActivityBinding.tvUserBio.text = userDetails.bio
-                                    }
+
                         } else {
                                     Toast.makeText(
                                                 this,
