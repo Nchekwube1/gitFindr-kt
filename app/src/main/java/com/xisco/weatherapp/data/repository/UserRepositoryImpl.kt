@@ -8,7 +8,7 @@ import javax.inject.Inject
 class UserRepositoryImpl @Inject constructor(
             private val api: GithubApi
 ) : UserRepository  {
-            override suspend fun getUser(username: String): GitUserDto {
-                        return api.getGithubUser(username)
-            }
+            override suspend fun getUser(username: String) =
+                         api.getGithubUser(username)
+
 }

@@ -11,14 +11,24 @@ import androidx.databinding.DataBindingUtil
 import com.xisco.weatherapp.R
 import com.xisco.weatherapp.databinding.ActivityMainBinding
 import com.xisco.weatherapp.ui.viewModels.MainActivityVM
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-            private val viewModel by viewModels<MainActivityVM>()
+            private val viewModel: MainActivityVM by viewModels()
             private lateinit var mainActivityBinding: ActivityMainBinding
             override fun onCreate(savedInstanceState: Bundle?) {
                         super.onCreate(savedInstanceState)
                         mainActivityBinding =
                                     DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+                        mainActivityBinding.pbLoading.visibility = View.VISIBLE
+                        viewModel.state.observe(this) { userDetails ->
+                                    mainActivityBinding.clUsetDetail.visibility = View.VISIBLE
+                                    mainActivityBinding.pbLoading.visibility = View.GONE
+                                    mainActivityBinding.tvUserBio.text = userDetails.bio
+                        }
+
                         mainActivityBinding.btnSearch.setOnClickListener { searchGithubUser() }
             }
 
@@ -35,8 +45,9 @@ class MainActivity : AppCompatActivity() {
 
                         if (currentUser.isNotEmpty()) {
                                     mainActivityBinding.pbLoading.visibility = View.VISIBLE
-
-//viewModel.getUser(currentUser)
+                                    viewModel.state.observe(this) { userDetails ->
+                                                mainActivityBinding.tvUserBio.text = userDetails.bio
+                                    }
                         } else {
                                     Toast.makeText(
                                                 this,
