@@ -56,12 +56,12 @@ data class GitUserDto(
             val url: String
 )
 
-fun GitUserDto.toGitUser(): GitUser {
-            return GitUser(
-                        avatarUrl = avatarUrl,
-                        bio = bio,
-                        email = email,
-                         followers = followers,
-                         following = following
-            )
-}
+//fun GitUserDto.toGitUser(): GitUser {
+//            return GitUser(
+//                        avatarUrl = avatarUrl,
+//                        bio = bio,
+//                        email = email,
+//                         followers = followers,
+//                         following = following
+//            )
+//}

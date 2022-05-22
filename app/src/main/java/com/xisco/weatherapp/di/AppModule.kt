@@ -25,10 +25,10 @@ object AppModule {
 
             }
 
-            @Provides
-            @Singleton
-            fun provideGithubRepository(api: GithubApi): UserRepository{
-                        return  UserRepository(api)
-            }
+//            @Provides
+//            @Singleton
+//            fun provideGithubRepository(api: GithubApi): UserRepository{
+//                        return  UserRepository(api)
+//            }
 
 }

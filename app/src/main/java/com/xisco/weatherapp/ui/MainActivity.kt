@@ -3,6 +3,7 @@ package com.xisco.weatherapp.ui
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -23,14 +24,17 @@ class MainActivity : AppCompatActivity() {
                                     DataBindingUtil.setContentView(this, R.layout.activity_main)
 
                         mainActivityBinding.pbLoading.visibility = View.VISIBLE
-                        viewModel.state.observe(this) { userDetails ->
-                                    mainActivityBinding.clUsetDetail.visibility = View.VISIBLE
-                                    mainActivityBinding.pbLoading.visibility = View.GONE
-                                    mainActivityBinding.tvUserBio.text = userDetails.bio
-                        }
+//                        viewModel.state.observe(this) { userDetails ->
+//                                    mainActivityBinding.clUsetDetail.visibility = View.VISIBLE
+//                                    mainActivityBinding.pbLoading.visibility = View.GONE
+////                                    mainActivityBinding.tvUserBio.text = userDetails.bio
+//                        }
+                        Log.d("MainActivity", "onCreate: ${viewModel.state}")
 
-                        mainActivityBinding.btnSearch.setOnClickListener { searchGithubUser() }
+//                        mainActivityBinding.btnSearch.setOnClickListener { searchGithubUser() }
             }
+
+
 
             private fun searchGithubUser() {
                         val inputText = mainActivityBinding.etUsername

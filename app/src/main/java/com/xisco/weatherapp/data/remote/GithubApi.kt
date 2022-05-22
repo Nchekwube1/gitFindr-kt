@@ -7,8 +7,9 @@ import retrofit2.http.Path
 
 interface GithubApi {
 
-            @GET("/${Constants.GIT_USER}")
-//            suspend fun  getGithubUser(@Path("username") username:String):Response<GitUserDto>
-            suspend fun  getGithubUser():Response<GitUserDto>
+            @GET("{username}")
+            suspend fun  getGithubUser(
+                        @Path("username") username:String
+            ):Response<GitUserDto>
 
 }
