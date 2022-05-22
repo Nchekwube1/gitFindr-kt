@@ -20,7 +20,7 @@ class MainActivityVM @Inject constructor(
 
             sealed class GithubEvents {
                         class Success(val resultValue: GitUserDto) : GithubEvents()
-                        class Failure(val resultText: String) : GithubEvents()
+                        class Failure(val errorText: String) : GithubEvents()
                         object Loading : GithubEvents()
                         object Empty : GithubEvents()
             }

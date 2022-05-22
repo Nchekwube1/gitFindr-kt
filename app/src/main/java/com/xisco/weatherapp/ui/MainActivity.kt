@@ -8,7 +8,9 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import com.xisco.weatherapp.R
 import com.xisco.weatherapp.databinding.ActivityMainBinding
 import com.xisco.weatherapp.ui.viewModels.MainActivityVM
@@ -18,14 +20,13 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
             private val viewModel: MainActivityVM by viewModels()
             private lateinit var mainActivityBinding: ActivityMainBinding
+
             override fun onCreate(savedInstanceState: Bundle?) {
                         super.onCreate(savedInstanceState)
                         mainActivityBinding =
                                     DataBindingUtil.setContentView(this, R.layout.activity_main)
-
-                        mainActivityBinding.pbLoading.visibility = View.VISIBLE
+                        mainActivityBinding.btnSearch.setOnClickListener { searchGithubUser() }
             }
-
 
 
             private fun searchGithubUser() {
@@ -36,11 +37,43 @@ class MainActivity : AppCompatActivity() {
                                     val imm =
                                                 getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                                     imm.hideSoftInputFromWindow(view.windowToken, 0)
+
                         }
 
 
                         if (currentUser.isNotEmpty()) {
-                                    mainActivityBinding.pbLoading.visibility = View.VISIBLE
+
+                                    viewModel.getUser(currentUser)
+
+                                    lifecycleScope.launchWhenStarted {
+                                                viewModel.userState.collect{
+                                                            event->
+                                                            Toast.makeText(
+                                                                        this@MainActivity,
+                                                                        "$event",
+                                                                        Toast.LENGTH_LONG
+                                                            ).show()
+                                                            when(event){
+                                                                        is MainActivityVM.GithubEvents.Loading ->{
+                                                                                    mainActivityBinding.pbLoading.isVisible = true
+                                                                        }
+                                                                        is MainActivityVM.GithubEvents.Success->{
+                                                                                    mainActivityBinding.pbLoading.isVisible = false
+                                                                                    mainActivityBinding.clUsetDetail.isVisible = true
+                                                                                    mainActivityBinding.tvUserBio.text = event.resultValue.bio
+
+                                                                        }
+                                                                        is MainActivityVM.GithubEvents.Failure->{
+                                                                                    mainActivityBinding.pbLoading.isVisible = false
+                                                                                    mainActivityBinding.tvErrorText.isVisible = true
+                                                                                    mainActivityBinding.tvErrorText.text = event.errorText
+
+                                                                        }
+                                                                        else -> Unit
+                                                            }
+                                                }
+                                    }
+
 
                         } else {
                                     Toast.makeText(
