@@ -11,6 +11,7 @@ import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.xisco.weatherapp.R
 import com.xisco.weatherapp.databinding.ActivityMainBinding
 import com.xisco.weatherapp.ui.viewModels.MainActivityVM
@@ -46,23 +47,41 @@ class MainActivity : AppCompatActivity() {
                                     viewModel.getUser(currentUser)
 
                                     lifecycleScope.launchWhenStarted {
-                                                viewModel.userState.collect{
-                                                            event->
-                                                            when(event){
-                                                                        is MainActivityVM.GithubEvents.Loading ->{
-                                                                                    mainActivityBinding.pbLoading.isVisible = true
-                                                                                    mainActivityBinding.clUsetDetail.isVisible = false
+                                                viewModel.userState.collect { event ->
+                                                            when (event) {
+                                                                        is MainActivityVM.GithubEvents.Loading -> {
+                                                                                    mainActivityBinding.pbLoading.isVisible =
+                                                                                                true
+                                                                                    mainActivityBinding.clUsetDetail.isVisible =
+                                                                                                false
                                                                         }
-                                                                        is MainActivityVM.GithubEvents.Success->{
-                                                                                    mainActivityBinding.pbLoading.isVisible = false
-                                                                                    mainActivityBinding.clUsetDetail.isVisible = true
-                                                                                    mainActivityBinding.tvUserBio.text = event.resultValue.bio
+                                                                        is MainActivityVM.GithubEvents.Success -> {
+                                                                                    mainActivityBinding.pbLoading.isVisible =
+                                                                                                false
+                                                                                    mainActivityBinding.clUsetDetail.isVisible =
+                                                                                                true
+                                                                                    mainActivityBinding.tvUserBio.text =
+                                                                                                event.resultValue.bio
+                                                                                    mainActivityBinding.tvUserEmail.text =
+                                                                                                event.resultValue.name
+                                                                                    mainActivityBinding.tvFollowers.text =
+                                                                                                "${event.resultValue.followers} followers"
+                                                                                    mainActivityBinding.tvFollowing.text =
+                                                                                                "${event.resultValue.following} following"
+                                                                                    Glide.with(this@MainActivity)
+                                                                                                .load(event.resultValue.avatarUrl)
+                                                                                                .into(mainActivityBinding.ivUserImage)
+
+                                                                                    mainActivityBinding.etUsername.setText("")
 
                                                                         }
-                                                                        is MainActivityVM.GithubEvents.Failure->{
-                                                                                    mainActivityBinding.pbLoading.isVisible = false
-                                                                                    mainActivityBinding.tvErrorText.isVisible =true
-                                                                                    mainActivityBinding.tvErrorText.text =event.errorText
+                                                                        is MainActivityVM.GithubEvents.Failure -> {
+                                                                                    mainActivityBinding.pbLoading.isVisible =
+                                                                                                false
+                                                                                    mainActivityBinding.tvErrorText.isVisible =
+                                                                                                true
+                                                                                    mainActivityBinding.tvErrorText.text =
+                                                                                                event.errorText
 
                                                                         }
                                                                         else -> Unit
