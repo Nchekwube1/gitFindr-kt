@@ -11,6 +11,9 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -18,6 +21,23 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
+//            @Provides
+//            fun getClient(
+//
+//            ): OkHttpClient = OkHttpClient.Builder()
+//                        .addInterceptor {
+//                                    var request = it.request()
+//
+//                                    request = request.newBuilder().addHeader(
+//                                                "Authentication", "Bearer 12355"
+//                                    ).build()
+//
+//
+//                                    return@addInterceptor  it.proceed(request)
+//                        }
+//                        .build()
+
             @Provides
             @Singleton
             fun provideGithubApi(): GithubApi{
