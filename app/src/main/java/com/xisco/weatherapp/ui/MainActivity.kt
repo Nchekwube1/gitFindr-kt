@@ -12,6 +12,7 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.xisco.weatherapp.R
 import com.xisco.weatherapp.databinding.ActivityMainBinding
 import com.xisco.weatherapp.ui.viewModels.MainActivityVM
@@ -70,6 +71,7 @@ class MainActivity : AppCompatActivity() {
                                                                                                 "${event.resultValue.following} following"
                                                                                     Glide.with(this@MainActivity)
                                                                                                 .load(event.resultValue.avatarUrl)
+                                                                                                .transform(CircleCrop())
                                                                                                 .into(mainActivityBinding.ivUserImage)
 
                                                                                     mainActivityBinding.etUsername.setText("")
