@@ -1,5 +1,7 @@
 package com.xisco.weatherapp.ui.viewModels
 
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.xisco.weatherapp.data.remote.dto.GitUserDto
@@ -29,21 +31,31 @@ class MainActivityVM @Inject constructor(
             val userState: StateFlow<GithubEvents>
                         get() = _userState
 
-            fun getUser(username:String){
+            fun getUser(username: String) {
                         viewModelScope.launch(dispatchers.io) {
                                     _userState.value = GithubEvents.Loading
 
-                                    when(val githubResponse = repository.getUser(username)){
-                                                is Resource.Error ->  _userState.value = GithubEvents.Failure(githubResponse.message!!)
+                                    when (val githubResponse = repository.getUser(username)) {
+
+                                                is Resource.Error -> {
+                                                            Log.d(
+                                                                        "MainActivityVm",
+                                                                        githubResponse.toString()
+                                                            )
+                                                            _userState.value = GithubEvents.Failure(
+                                                                        githubResponse.message
+                                                                                    ?: "An error occurred"
+                                                            )
+                                                }
                                                 is Resource.Success -> {
                                                             val userDetails = githubResponse.data!!
-                                                            GithubEvents.Success(userDetails)
+                                                            _userState.value = GithubEvents.Success(
+                                                                        userDetails
+                                                            )
                                                 }
                                     }
                         }
             }
-
-
 
 
 }

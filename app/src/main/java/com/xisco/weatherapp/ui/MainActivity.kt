@@ -48,25 +48,39 @@ class MainActivity : AppCompatActivity() {
                                     lifecycleScope.launchWhenStarted {
                                                 viewModel.userState.collect{
                                                             event->
-                                                            Toast.makeText(
-                                                                        this@MainActivity,
-                                                                        "$event",
-                                                                        Toast.LENGTH_LONG
-                                                            ).show()
                                                             when(event){
                                                                         is MainActivityVM.GithubEvents.Loading ->{
                                                                                     mainActivityBinding.pbLoading.isVisible = true
+                                                                                    mainActivityBinding.clUsetDetail.isVisible = false
+                                                                                    Toast.makeText(
+                                                                                                this@MainActivity,
+                                                                                                "Loading state $event",
+
+                                                                                                Toast.LENGTH_SHORT
+                                                                                    ).show()
+
                                                                         }
                                                                         is MainActivityVM.GithubEvents.Success->{
                                                                                     mainActivityBinding.pbLoading.isVisible = false
                                                                                     mainActivityBinding.clUsetDetail.isVisible = true
                                                                                     mainActivityBinding.tvUserBio.text = event.resultValue.bio
+                                                                                    Toast.makeText(
+                                                                                                this@MainActivity,
+                                                                                                "Success state $event",
+
+                                                                                                Toast.LENGTH_SHORT
+                                                                                    ).show()
 
                                                                         }
                                                                         is MainActivityVM.GithubEvents.Failure->{
                                                                                     mainActivityBinding.pbLoading.isVisible = false
-                                                                                    mainActivityBinding.tvErrorText.isVisible = true
-                                                                                    mainActivityBinding.tvErrorText.text = event.errorText
+                                                                                    mainActivityBinding.tvErrorText.isVisible =true
+                                                                                    mainActivityBinding.tvErrorText.text =event.errorText
+                                                                                    Toast.makeText(
+                                                                                                this@MainActivity,
+                                                                                                "Failed state ------->${event.errorText}",
+                                                                                                Toast.LENGTH_SHORT
+                                                                                    ).show()
 
                                                                         }
                                                                         else -> Unit
