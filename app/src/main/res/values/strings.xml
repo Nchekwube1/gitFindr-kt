@@ -5,4 +5,5 @@
     <string name="search">Search</string>
     <string name="enter_username">Enter username</string>
     <string name="gitfindr">GitFindr</string>
+    <string name="user_image">User image</string>
 </resources>
